@@ -2,10 +2,18 @@ package org.example;
 
 public class BoardPrinter implements PrinterInterface {
     public void printBoard(char[][] board) {
-        System.out.println(board[0][0] + "|" + board[0][1] + "|" + board[0][2]);
-        System.out.println("-+-+-");
-        System.out.println(board[1][0] + "|" + board[1][1] + "|" + board[1][2]);
-        System.out.println("-+-+-");
-        System.out.println(board[2][0] + "|" + board[2][1] + "|" + board[2][2]);
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 3; col++) {
+                char cell = board[row][col];
+                if (cell == ' ') {
+                    System.out.print(row * 3 + col + 1);
+                } else {
+                    System.out.print(cell);
+                }
+                if (col < 2) System.out.print("|");
+            }
+            System.out.println();
+            if (row < 2) System.out.println("-+-+-");
+        }
     }
 }

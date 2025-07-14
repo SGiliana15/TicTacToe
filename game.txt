@@ -1,0 +1,6 @@
+Final Tic-Tac-Toe Game Statistics
+-------------------------------
+Player 1 (X) wins: 1
+Player 2 (O) wins: 1
+Ties: 0
+-------------------------------

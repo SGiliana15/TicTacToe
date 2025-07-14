@@ -6,16 +6,24 @@ public class Game {
     private final BoardInterface board;
     private final PrinterInterface printer;
     private final Scanner scanner;
+    private final char firstPlayer;
 
-    public Game(BoardInterface board, PrinterInterface printer, Scanner scanner) {
+    public Game(BoardInterface board, PrinterInterface printer, Scanner scanner, char firstPlayer) {
         this.board = board;
         this.printer = printer;
         this.scanner = scanner;
+        this.firstPlayer = firstPlayer;
     }
 
-    public void start() {
-        char currentPlayer = 'X';
-        String currentPlayerName = "Player 1";
+    public char start() {
+        char currentPlayer = firstPlayer;
+        String currentPlayerName;
+
+        if (currentPlayer == 'X') {
+            currentPlayerName = "Player 1";
+        } else {
+            currentPlayerName = "Player 2";
+        }
 
         printer.printBoard(board.getBoard());
 
@@ -25,24 +33,20 @@ public class Game {
 
             if (board.hasPlayerWon(currentPlayer)) {
                 System.out.println(currentPlayerName + " wins!");
-                break;
+                return currentPlayer;
             }
 
             if (board.isFull()) {
                 System.out.println("The game ended in a tie!");
-                break;
+                return 'T';
             }
 
             if (currentPlayer == 'X') {
                 currentPlayer = 'O';
+                currentPlayerName = "Player 2";
             } else {
                 currentPlayer = 'X';
-            }
-
-            if (currentPlayer == 'X') {
                 currentPlayerName = "Player 1";
-            } else {
-                currentPlayerName = "Player 2";
             }
         }
     }
@@ -51,7 +55,7 @@ public class Game {
         String userInput;
         while (true) {
             System.out.println(playerName + ", where would you like to play? (1-9)");
-            userInput = scanner.nextLine();
+            userInput = scanner.nextLine().trim();
             if (board.isValidMove(userInput)) {
                 break;
             } else {
