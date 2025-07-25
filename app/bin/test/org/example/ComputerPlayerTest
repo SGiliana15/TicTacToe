@@ -1,0 +1,66 @@
+package org.example;
+
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
+public class ComputerPlayerTest {
+
+    @Test
+    public void testFirstMoveIsCorner() {
+        BoardInterface board = new Board();
+        ComputerPlayer computer = new ComputerPlayer('X');
+
+        String move = computer.getMove(board);
+        assertTrue(move.equals("1") || move.equals("3") || move.equals("7") || move.equals("9"));
+    }
+
+    @Test
+    public void testSecondMoveIsCenter() {
+        BoardInterface board = new Board();
+        ComputerPlayer computer = new ComputerPlayer('O');
+
+        board.placeMove("1", 'X');
+
+        String move = computer.getMove(board);
+        assertEquals("5", move);
+    }
+
+    @Test
+    public void testComputerTakesWin() {
+        BoardInterface board = new Board();
+        ComputerPlayer computer = new ComputerPlayer('X');
+
+        board.placeMove("1", 'X');
+        board.placeMove("2", 'X');
+        board.placeMove("4", 'O');
+
+        String move = computer.getMove(board);
+        assertEquals("3", move);
+    }
+
+    @Test
+    public void testComputerBlocksOpponent() {
+        BoardInterface board = new Board();
+        ComputerPlayer computer = new ComputerPlayer('O');
+
+        board.placeMove("1", 'X');
+        board.placeMove("2", 'X');
+
+        String move = computer.getMove(board);
+        assertEquals("3", move);
+    }
+
+    @Test
+    public void testComputerPicksRandom() {
+        BoardInterface board = new Board();
+        ComputerPlayer computer = new ComputerPlayer('X');
+
+        String[] moves = {"1","2","3","4","6","7","8"};
+        for (String pos : moves) {
+            board.placeMove(pos, 'O');
+        }
+
+        String move = computer.getMove(board);
+        assertTrue(move.equals("5") || move.equals("9"));
+    }
+}
